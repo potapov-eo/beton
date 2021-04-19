@@ -1,3 +1,4 @@
+/*
 import axios from "axios";
 
 export const baseURL = "http://localhost:7542/2.0"
@@ -16,8 +17,18 @@ export const AuthAPI = {
         return instance.delete(`auth/me`)
     }
 }
+*/
 
 
+import { mockFetch } from "./mock-fetch";
+
+export function getEmployees() {
+    return mockFetch("/api/employees");
+}
+
+export function getWorklog() {
+    return mockFetch("/api/employees/worklog");
+}
 
 
 
