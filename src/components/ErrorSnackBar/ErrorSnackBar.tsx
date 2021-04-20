@@ -1,6 +1,6 @@
 import style from './ErrorSnackBar.module.css'
 import {useDispatch} from "react-redux";
-import {setAppError} from "../../store/app-reduser/app-reducer";
+import {setAppError} from "../../store/app-reducer/app-reducer";
 
 
 
