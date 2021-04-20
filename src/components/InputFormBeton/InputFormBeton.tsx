@@ -27,9 +27,14 @@ export const InputFormBeton = () => {
         },
         validate: (values) => {
             const errors: FormikErrorType = {};
-
+            if(!/^[0-9]+$/.test(values.numberOf)){
+                errors.numberOf='Введите количество м3 в правильном формате'
+            }
             if (!values.grade) {
-                errors.grade = "Required password"
+                errors.grade = "Введите марку бетона"
+            }
+            if(!/^[0-9]+$/.test(values.prize)){
+                errors.prize='Введите цену бетона в правильном формате'
             }
             return errors;
         },
@@ -53,7 +58,7 @@ export const InputFormBeton = () => {
 
             <TextField size="small" variant="outlined" name="grade" onChange={formik.handleChange}
                        onBlur={formik.handleBlur} type="text"
-                       value={formik.values.grade} placeholder={"grade"}/>
+                       value={formik.values.grade} placeholder={"Марка бетона"}/>
 
 
             <FormControl variant="outlined" size={"small"}>
@@ -78,20 +83,24 @@ export const InputFormBeton = () => {
 
             < TextField size="small" variant="outlined" name="numberOf" onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        type="text" value={formik.values.numberOf} placeholder={"numberOf"}/>
+                        type="text" value={formik.values.numberOf} placeholder={"количество, м3"}/>
+
 
 
             <TextField size="small" variant="outlined" name="prize" onChange={formik.handleChange}
                        onBlur={formik.handleBlur}
-                       type="text" value={formik.values.prize} placeholder={"prize"}/>
+                       type="text" value={formik.values.prize} placeholder={"Цена"}/>
 
-
+            {formik.touched.numberOf && formik.errors.numberOf ?
+                <div style={{color: "red"}}> {formik.errors.numberOf} </div> : null}
             {formik.touched.article && formik.errors.article ?
                 <div style={{color: "red"}}> {formik.errors.article} </div> : null}
             {formik.touched.grade && formik.errors.grade ?
                 <div style={{color: "red"}}> {formik.errors.grade} </div> : null}
+            {formik.touched.prize && formik.errors.prize ?
+                <div style={{color: "red"}}> {formik.errors.prize} </div> : null}
 
-            <Button type="submit" variant="contained" color="primary">ADD</Button>
+           <div> <Button type="submit" variant="contained" color="primary">ADD</Button></div>
         </form>
 
     )

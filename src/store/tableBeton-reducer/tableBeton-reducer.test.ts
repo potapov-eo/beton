@@ -1,4 +1,4 @@
-import {setTableBeton, tableBetonInitialStateType, tableBetonReducer} from "./tableBeton-reducer";
+import {removeTableBeton, setTableBeton, tableBetonInitialStateType, tableBetonReducer} from "./tableBeton-reducer";
 
 let startState: tableBetonInitialStateType
 
@@ -6,7 +6,7 @@ let startState: tableBetonInitialStateType
 beforeEach(() => {
     startState = {
         tableBetons: [{
-            id:"1",
+            id: "1",
             grade: "1",
             mobility: "1",
             prize: 1,
@@ -16,9 +16,9 @@ beforeEach(() => {
 
 });
 
-test('correct status should be added', () => {
+test('correct beton should be added', () => {
     const beton = {
-        id:"2",
+        id: "2",
         grade: "2",
         mobility: "2",
         prize: 2,
@@ -35,11 +35,22 @@ test('correct status should be added', () => {
                 mobility: 1,
                 prize: 1,
                 numberOf: 1,
-            },{
+            }, {
                 grade: 2,
                 mobility: 2,
                 prize: 2,
                 numberOf: 2,
             }]
+        })
+})
+test('correct remove beton should be added', () => {
+
+    const action = removeTableBeton("1");
+
+    const endState = tableBetonReducer(startState, action)
+
+    expect(endState).toEqual(
+        {
+            tableBetons: []
         })
 })

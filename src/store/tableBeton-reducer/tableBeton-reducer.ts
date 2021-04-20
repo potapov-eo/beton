@@ -6,6 +6,8 @@ export const tableBetonReducer = (state: tableBetonInitialStateType = initialSta
     switch (action.type) {
         case 'TABLE_BETON/SET_BETON':
             return {...state, tableBetons: [...state.tableBetons?state.tableBetons:[],action.beton]}
+        case 'TABLE_BETON/REMOVE_BETON':
+            return {...state, tableBetons: state.tableBetons? state.tableBetons.filter(bet=>bet.id!==action.id):null}
 
         default:
             return state
@@ -14,6 +16,8 @@ export const tableBetonReducer = (state: tableBetonInitialStateType = initialSta
 
 export const setTableBeton = (beton: TableBetonType) =>
     ({type: 'TABLE_BETON/SET_BETON', beton} as const)
+export const removeTableBeton = (id: string) =>
+    ({type: 'TABLE_BETON/REMOVE_BETON', id} as const)
 
 
 
@@ -31,7 +35,8 @@ export type tableBetonInitialStateType = {
 }
 
 type ActionsType =
-    ReturnType<typeof setTableBeton>
+    ReturnType<typeof setTableBeton>|
+    ReturnType<typeof removeTableBeton>
 
 
 
