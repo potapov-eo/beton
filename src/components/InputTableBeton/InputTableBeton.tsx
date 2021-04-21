@@ -11,7 +11,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectorTableBetons} from "../../store/tableBeton-reducer/tableBeton-selector";
 import {Delete} from "@material-ui/icons";
 import {IconButton} from "@material-ui/core";
-import {removeTableBeton} from "../../store/tableBeton-reducer/tableBeton-reducer";
+import {changeTableBetonProperty, removeTableBeton} from "../../store/tableBeton-reducer/tableBeton-reducer";
+import {EditableSpan} from "../EditableSpan/EditableSpan";
 
 const useStyles = makeStyles({
     table: {
@@ -25,7 +26,11 @@ export default function InputTableBeton() {
     const betons = useSelector(selectorTableBetons)
     const dispatch = useDispatch()
     const removeBeton = (id:string)=>{dispatch(removeTableBeton(id))}
+    const ChangeBeton = (newValue: string|number, id:string, property:propertyType)=>{
 
+        // @ts-ignore
+        dispatch(changeTableBetonProperty(id,{[property]:newValue}))
+    }
     return (
         <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
@@ -41,10 +46,18 @@ export default function InputTableBeton() {
                     {betons?.map((beton) => (
                         <TableRow key={beton.id}>
 
-                            <TableCell align="center">{beton.grade}</TableCell>
-                            <TableCell align="center">{beton.mobility}</TableCell>
-                            <TableCell align="center">{beton.numberOf}</TableCell>
-                            <TableCell align="center">{beton.prize}</TableCell>
+                            <TableCell align="center">
+                                <EditableSpan value={beton.grade} id={beton.id} property={"grade"} onChange={ChangeBeton}/>
+                            </TableCell>
+                            <TableCell align="center">
+                                <EditableSpan value={beton.mobility} id={beton.id} property={"mobility"} onChange={ChangeBeton}/>
+                            </TableCell>
+                            <TableCell align="center">
+                                <EditableSpan value={beton.numberOf}id={beton.id} property={"numberOf"} onChange={ChangeBeton}/>
+                            </TableCell>
+                            <TableCell align="center">
+                                <EditableSpan value={beton.prize} id={beton.id} property={"prize"} onChange={ChangeBeton}/>
+                            </TableCell>
                             <TableCell align="center">
                                 <IconButton onClick={()=>removeBeton(beton.id)}>
                                 <Delete/>
@@ -58,3 +71,4 @@ export default function InputTableBeton() {
         </TableContainer>
     );
 }
+export type propertyType="grade"|"mobility"|"prize"|"numberOf"
